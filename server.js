@@ -120,6 +120,50 @@ const calculateDuration = async (req, res) => {
 
 app.post('/api/calculate', calculateDuration)
 
+
+const searchPlaylists = async (req, res) => {
+    try {
+
+        const response = await youtube.search.list({
+            key: api_key,
+            part: 'snippet',
+            maxResults: 5,
+            q: req.body.query,
+            type: 'playlist'
+        })
+
+        const titles = []
+
+        response.data.items.forEach(item => {
+            titles.push(
+                {
+                    title: item.snippet.title,
+                    description: item.snippet.description,
+                    id: item.id.playlistId,
+                    thumbnail: [item.snippet.thumbnails.default.url, item.snippet.thumbnails.medium.url]
+                }
+            )
+        })
+
+        res.status(200).json({
+            status: 'success',
+            length: titles.length,
+            data: {
+                titles: titles
+            }
+        })
+
+    } catch (e) {
+        res.status(400).json({
+            status: 'fail',
+            message: e.message
+        })
+    }
+}
+
+app.post('/api/search', searchPlaylists)
+
+
 app.listen(port, () => {
     console.log(`server started at port: ${port}`)
 })
