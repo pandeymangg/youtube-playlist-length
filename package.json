@@ -1,0 +1,16 @@
+{
+  "name": "yt-pl-len-github",
+  "version": "1.0.0",
+  "description": "youtube playlist length calculator",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Anshuman Pandey",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "googleapis": "^66.0.0",
+    "nodemon": "^2.0.6"
+  }
+}
