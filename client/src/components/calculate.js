@@ -31,17 +31,24 @@ function Calculate(props) {
 
     let duration = null
 
-    if(response) {
+    if (response) {
+        let [minutes, seconds] = [ parseInt(response.data.data.duration / 60), parseInt(response.data.data.duration % 60) ]
+        let hours = parseInt(minutes / 60)
+        minutes = parseInt(minutes % 60)
+
         duration = (
             <div>
-                { response.data.data.duration }
+                <p>
+                    { `Total Length: ${hours} hours ${minutes} minutes ${seconds} seconds` }
+                </p>
             </div>
         )
+
     }
 
     return (
         <>
-            { duration }
+            {duration}
         </>
     )
 }
