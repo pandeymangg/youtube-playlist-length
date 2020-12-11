@@ -1,6 +1,7 @@
 import React from 'react'
 
 function CalculateForm(props) {
+
     const [inputTerm, setInputTerm] = React.useState('')
 
     const handleSubmit = (e) => {
