@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import PlayList from './playlist'
 
 function Calculate(props) {
     const queryParams = new URLSearchParams(props.location.search)
@@ -9,7 +10,7 @@ function Calculate(props) {
             idCopy = param[1]
         }
     }
-
+    
     const [response, setResponse] = React.useState(null)
 
     React.useEffect(() => {
@@ -19,7 +20,7 @@ function Calculate(props) {
                 id: idCopy
             })
 
-            if (response.data.data !== response) {
+            if(response.data.data !== response) {
                 setResponse(response.data.data)
             }
         }
@@ -27,28 +28,22 @@ function Calculate(props) {
         getResponse()
 
         console.log('mounted...')
-    }, [idCopy])
+    }, [idCopy])  
 
-    let duration = null
-
-    if (response) {
-        let [minutes, seconds] = [ parseInt(response.data.data.duration / 60), parseInt(response.data.data.duration % 60) ]
-        let hours = parseInt(minutes / 60)
-        minutes = parseInt(minutes % 60)
-
-        duration = (
-            <div>
-                <p>
-                    { `Total Length: ${hours} hours ${minutes} minutes ${seconds} seconds` }
-                </p>
-            </div>
+    let playList = (
+        <div className="container" >
+            <h1>Loading...</h1>
+        </div>
+    )
+    if(response) {
+        playList = (
+            <PlayList response={ response } />
         )
-
     }
 
     return (
         <>
-            {duration}
+            { playList }
         </>
     )
 }
