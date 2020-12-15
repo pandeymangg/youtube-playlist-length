@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import PlayList from './playlist'
 import Spinner from './spinner'
+import ErrorComp from './errorComp'
 
 function Calculate(props) {
     const queryParams = new URLSearchParams(props.location.search)
@@ -13,16 +14,22 @@ function Calculate(props) {
     }
     
     const [response, setResponse] = React.useState(null)
+    const [error, setError] = React.useState(null)
 
     React.useEffect(() => {
         setResponse(null)
+        setError(null)
         async function getResponse() {
-            const response = await axios.post('/api/calculate', {
-                id: idCopy
-            })
-
-            if(response.data.data !== response) {
-                setResponse(response.data.data)
+            try {
+                const response = await axios.post('/api/calculate', {
+                    id: idCopy
+                })
+    
+                if(response.data.data !== response) {
+                    setResponse(response.data.data)
+                }
+            } catch(error) {
+                setError(error.response)
             }
         }
 
@@ -34,9 +41,16 @@ function Calculate(props) {
     let playList = (
         <Spinner />
     )
+
     if(response) {
         playList = (
             <PlayList response={ response } />
+        )
+    }
+
+    if(error) {
+        playList = (
+            <ErrorComp error={error} id={idCopy} />
         )
     }
 
