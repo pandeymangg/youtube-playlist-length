@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import PlayList from './playlist'
+import Spinner from './spinner'
 
 function Calculate(props) {
     const queryParams = new URLSearchParams(props.location.search)
@@ -31,9 +32,7 @@ function Calculate(props) {
     }, [idCopy])  
 
     let playList = (
-        <div className="container" >
-            <h1>Loading...</h1>
-        </div>
+        <Spinner />
     )
     if(response) {
         playList = (

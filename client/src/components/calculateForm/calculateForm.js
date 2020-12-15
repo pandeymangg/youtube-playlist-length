@@ -1,7 +1,7 @@
 import React from 'react'
+import styles from './style.module.css'
 
 function CalculateForm(props) {
-
     const [inputTerm, setInputTerm] = React.useState('')
 
     const handleSubmit = (e) => {
@@ -10,9 +10,9 @@ function CalculateForm(props) {
     }
 
     return(
-        <form className="col s6" onSubmit={(e) => handleSubmit(e)} >
+        <form className="col s12" onSubmit={(e) => handleSubmit(e)} >
             <div className="row" >
-                <div className="input-field col s8" >
+                <div className={`input-field col s8 ${styles.inputColor}`} >
                     <input type="text" id="calculate-id" onChange={(e) => setInputTerm(e.target.value)} ></input>
                     <label htmlFor="calculate-id" >Playlist link or id</label>
                 </div>

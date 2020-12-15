@@ -1,7 +1,10 @@
 const express = require('express')
 const { google } = require('googleapis')
-const port = 8000
-const api_key = 'your_api_key'
+
+const dotenv = require('dotenv')
+dotenv.config({ path: './config.env' })
+
+const api_key = process.env.API_KEY
 let nextPageToken = null
 const app = express()
 
@@ -163,6 +166,7 @@ const searchPlaylists = async (req, res) => {
 
 app.post('/api/search', searchPlaylists)
 
+const port = process.env.PORT || 8000
 
 app.listen(port, () => {
     console.log(`server started at port: ${port}`)

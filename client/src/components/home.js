@@ -1,5 +1,5 @@
 import React from 'react'
-import CalculateForm from './calculateForm'
+import CalculateForm from './calculateForm/calculateForm'
 
 function Home(props) {
 
@@ -19,7 +19,7 @@ function Home(props) {
 
     return (
         <div className='container' >
-            <h3 style={{ fontFamily: 'Noto Sans JP, sans-serif' }} ><i style={{ color: 'red' }} className="fab fa-youtube"></i> YouTube Playlist Length</h3>
+            <h3 style={{ fontFamily: 'Noto Sans JP, sans-serif' }} ><i style={{color:'red'}} className="fab fa-youtube"></i> YouTube Playlist Length</h3>
             <br></br>
             <div className="row" >
                 <CalculateForm calculateFormSubmit={handleCalculateFormsubmit} ></CalculateForm>
