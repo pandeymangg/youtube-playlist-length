@@ -1,5 +1,6 @@
 const express = require('express')
 const { google } = require('googleapis')
+const path = require("path")
 
 const dotenv = require('dotenv')
 dotenv.config({ path: './config.env' })
@@ -11,10 +12,6 @@ const app = express()
 const youtube = google.youtube('v3')
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.status(200).send('Welcome')
-})
 
 const calculateDuration = async (req, res) => {
     try {
@@ -123,50 +120,16 @@ const calculateDuration = async (req, res) => {
 
 app.post('/api/calculate', calculateDuration)
 
-
-const searchPlaylists = async (req, res) => {
-    try {
-
-        const response = await youtube.search.list({
-            key: api_key,
-            part: 'snippet',
-            maxResults: 5,
-            q: req.body.query,
-            type: 'playlist'
-        })
-
-        const titles = []
-
-        response.data.items.forEach(item => {
-            titles.push(
-                {
-                    title: item.snippet.title,
-                    description: item.snippet.description,
-                    id: item.id.playlistId,
-                    thumbnail: [item.snippet.thumbnails.default.url, item.snippet.thumbnails.medium.url]
-                }
-            )
-        })
-
-        res.status(200).json({
-            status: 'success',
-            length: titles.length,
-            data: {
-                titles: titles
-            }
-        })
-
-    } catch (e) {
-        res.status(400).json({
-            status: 'fail',
-            message: e.message
-        })
-    }
-}
-
-app.post('/api/search', searchPlaylists)
-
 const port = process.env.PORT || 8000
+
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+
+}
 
 app.listen(port, () => {
     console.log(`server started at port: ${port}`)

@@ -4,7 +4,8 @@
   "description": "youtube playlist length calculator",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Anshuman Pandey",
   "license": "MIT",

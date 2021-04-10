@@ -21,9 +21,9 @@ function PlayList(props) {
     return (
         <div className="col s12 m7 container">
             <div className="card horizontal" >
-                <div className="card-image left valign-wrapper center-align " >
+                {/* <div className="card-image left valign-wrapper center-align " >
                     <img style={{ marginLeft: '5%' }} alt="thumbnail" src={props.response.thumbs[0].medium.url} ></img>
-                </div>
+                </div> */}
                 <div style={{ marginLeft: '2%' }} className="card-stacked" >
                     <div className="card-content" >
 
