@@ -1,5 +1,7 @@
 # YouTube Playlist Length Calculator
 
+![yt-pl-len](/data/images/ytPLLEN.JPG)
+
 This is a web app that calculates the length of a YouTube playlist. This is helpful for anyone who wants to learn something from a youtube tutorial series or a course
 and wants to find out how much time will it take it finish.
 
