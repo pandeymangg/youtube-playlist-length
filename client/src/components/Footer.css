@@ -1,0 +1,12 @@
+.footer {
+    margin-top: 1.5rem;
+    background: #efefef;
+    font-family: Noto Sans JP, sans-serif;
+}
+
+.footer-container {
+   margin: auto;
+   display: flex;
+   justify-content: space-between;
+   max-width: 1100px;
+}

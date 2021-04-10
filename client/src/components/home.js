@@ -18,7 +18,7 @@ function Home(props) {
     }
 
     return (
-        <div className='container' >
+        <div className='container offset-s6' >
             <h3 style={{ fontFamily: 'Noto Sans JP, sans-serif' }} ><i style={{color:'red'}} className="fab fa-youtube"></i> YouTube Playlist Length</h3>
             <br></br>
             <div className="row" >

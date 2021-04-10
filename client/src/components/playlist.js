@@ -19,7 +19,7 @@ function PlayList(props) {
     minutes4 = parseInt(minutes4 % 60)
 
     return (
-        <div className="col s12 m7 container">
+        <div className="col s12 m7 container" >
             <div className="card horizontal" >
                 {/* <div className="card-image left valign-wrapper center-align " >
                     <img style={{ marginLeft: '5%' }} alt="thumbnail" src={props.response.thumbs[0].medium.url} ></img>
