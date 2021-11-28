@@ -1,136 +1,137 @@
-const express = require('express')
-const { google } = require('googleapis')
-const path = require("path")
+const express = require("express");
+const { google } = require("googleapis");
+const path = require("path");
 
-const dotenv = require('dotenv')
-dotenv.config({ path: './config.env' })
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 
-const api_key = process.env.API_KEY
-let nextPageToken = null
-const app = express()
+const api_key = process.env.API_KEY;
+const app = express();
 
-const youtube = google.youtube('v3')
+const youtube = google.youtube("v3");
 
 app.use(express.json());
 
 const calculateDuration = async (req, res) => {
-    try {
-        //console.log(req.body.id)
-        let videoIds = []
-        let regex = /(\d+)/g
-        let duration = []
-        let durationString = ''
-        let nextPageToken = null
-        let durationSeconds = 0
-        let totalSeconds = 0
-        let speed = parseFloat(req.body.speed) || '1'
-        let thumbs = []
-        let length = 0
-        let title = ''
-        let channelTitle = ''
-        let description = ''
+  try {
+    let videoIds = [];
 
-        const testResponse = await youtube.playlists.list({
-            key: api_key,
-            part: 'snippet',
-            id: req.body.id
-        })
+    let hourRegex = /(\d+)H/g;
+    let minuteRegex = /(\d+)M/g;
+    let secondRegex = /(\d+)S/g;
 
-        title = testResponse.data.items[0].snippet.title
-        channelTitle = testResponse.data.items[0].snippet.channelTitle
-        description = testResponse.data.items[0].snippet.description
+    let nextPageToken = null;
+    let durationSeconds = 0;
+    let totalSeconds = 0;
+    let speed = parseFloat(req.body.speed) || "1";
+    let thumbs = [];
+    let length = 0;
+    let title = "";
+    let channelTitle = "";
+    let description = "";
 
-        thumbs.push(testResponse.data.items[0].snippet.thumbnails)
+    const testResponse = await youtube.playlists.list({
+      key: api_key,
+      part: "snippet",
+      id: req.body.id,
+    });
 
-        while (true) {
-            const plResponse = await youtube.playlistItems.list({
-                key: api_key,
-                part: 'contentDetails, snippet',
-                playlistId: req.body.id,
-                maxResults: 50,
-                pageToken: nextPageToken
-            })
+    title = testResponse.data.items[0].snippet.title;
+    channelTitle = testResponse.data.items[0].snippet.channelTitle;
+    description = testResponse.data.items[0].snippet.description;
 
-            videoIds = []
-            plResponse.data.items.forEach(item => {
-                videoIds.push(item.contentDetails.videoId)
-            })
+    thumbs.push(testResponse.data.items[0].snippet.thumbnails);
 
-            length += videoIds.length
+    while (true) {
+      const plResponse = await youtube.playlistItems.list({
+        key: api_key,
+        part: "contentDetails, snippet",
+        playlistId: req.body.id,
+        maxResults: 50,
+        pageToken: nextPageToken,
+      });
 
-            const vidResponse = await youtube.videos.list({
-                key: api_key,
-                part: 'contentDetails',
-                id: videoIds.join(',')
-            })
+      videoIds = [];
+      plResponse.data.items.forEach((item) =>
+        videoIds.push(item.contentDetails.videoId)
+      );
 
-            vidResponse.data.items.forEach(item => {
-                duration = item.contentDetails.duration.match(regex)
+      length += videoIds.length;
 
-                if (duration.length < 4) {
-                    durationString = `${duration[0]} ${duration[1]} ${duration[2]}`
-                }
+      const vidResponse = await youtube.videos.list({
+        key: api_key,
+        part: "contentDetails",
+        id: videoIds.join(","),
+      });
 
-                if (duration.length < 3) {
-                    durationString = `0 ${duration[0]} ${duration[1]}`
-                }
+      vidResponse.data.items.forEach((item) => {
+        const hour =
+          item.contentDetails.duration
+            ?.match(hourRegex)?.[0]
+            ?.replace("H", "") || 0;
+        const min =
+          item.contentDetails.duration
+            ?.match(minuteRegex)?.[0]
+            ?.replace("M", "") || 0;
+        const sec =
+          item.contentDetails.duration
+            ?.match(secondRegex)?.[0]
+            ?.replace("S", "") || 0;
 
-                if (duration.length < 2) {
-                    durationString = `0 0 ${duration[0]}`
-                }
+        durationSeconds =
+          parseInt(hour) * 3600 + parseInt(min) * 60 + parseInt(sec);
 
-                duration = durationString.split(' ')
+        totalSeconds += durationSeconds;
+      });
 
-                durationSeconds = parseInt(duration[0]) * 3600 + parseInt(duration[1]) * 60 + parseInt(duration[2])
-
-                totalSeconds += (durationSeconds)
-            })
-
-            nextPageToken = plResponse.data.nextPageToken
-            if (!nextPageToken) {
-                break;
-            }
-        }
-
-        let [minutes, seconds] = [parseInt((totalSeconds / speed) / 60), parseInt((totalSeconds / speed) % 60)]
-        let hours = parseInt(minutes / 60)
-        minutes = parseInt(minutes % 60)
-
-        res.status(200).json({
-            status: 'success',
-            data: {
-                numberOfVideos: length,
-                title: title,
-                description: description,
-                channelTitle: channelTitle,
-                duration: parseInt(totalSeconds / speed),
-                hours: hours,
-                minutes: minutes,
-                seconds: seconds,
-                thumbs: thumbs,
-            }
-        })
-    } catch (e) {
-        res.status(500).json({
-            status: 'fail',
-            message: e.message
-        })
+      nextPageToken = plResponse.data.nextPageToken;
+      if (!nextPageToken) {
+        break;
+      }
     }
-}
 
-app.post('/api/calculate', calculateDuration)
+    let [minutes, seconds] = [
+      parseInt(totalSeconds / speed / 60),
+      parseInt((totalSeconds / speed) % 60),
+    ];
+    let hours = parseInt(minutes / 60);
+    minutes = parseInt(minutes % 60);
 
-const port = process.env.PORT || 8000
+    res.status(200).json({
+      status: "success",
+      data: {
+        numberOfVideos: length,
+        title: title,
+        description: description,
+        channelTitle: channelTitle,
+        duration: parseInt(totalSeconds / speed),
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        thumbs: thumbs,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      status: "fail",
+      message: e.message,
+    });
+  }
+};
 
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static('client/build'))
+app.post("/api/calculate", calculateDuration);
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
+const port = process.env.PORT || 8000;
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 app.listen(port, () => {
-    console.log(`server started at port: ${port}`)
-})
+  console.log(`server started at port: ${port}`);
+});
