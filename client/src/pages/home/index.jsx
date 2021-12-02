@@ -1,5 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import CalculateForm from "../../components/CalculateForm";
+import { FiYoutube } from "react-icons/fi";
 
 function Home({ history }) {
   const handleCalculateFormSubmit = (inputTerm) => {
@@ -14,17 +16,38 @@ function Home({ history }) {
   };
 
   return (
-    <div className="container offset-s6">
-      <h3 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-        <i style={{ color: "red" }} className="fab fa-youtube"></i> YouTube
-        Playlist Length
-      </h3>
-      <br></br>
-      <div className="row">
-        <CalculateForm calculateFormSubmit={handleCalculateFormSubmit} />
+    <Container>
+      <div>
+        <div className="main-heading">
+          <div>
+            <FiYoutube size={42} color="red" />
+            <span>YouTube Playlist Length</span>
+          </div>
+        </div>
+
+        <div className="">
+          <CalculateForm calculateFormSubmit={handleCalculateFormSubmit} />
+        </div>
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  height: 100%;
+
+  & .main-heading {
+    font-size: 48px;
+    line-height: 1;
+
+    & div {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+`;
 
 export default Home;
