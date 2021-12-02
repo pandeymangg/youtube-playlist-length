@@ -1,54 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PlayList from "./playlist";
 import Spinner from "./spinner";
 import ErrorComp from "./errorComp";
 
-function Calculate(props) {
-  const queryParams = new URLSearchParams(props.location.search);
-  let idCopy;
-  for (let param of queryParams.entries()) {
-    if (param[0] === "id") {
-      idCopy = param[1];
+function Calculate({ match }) {
+  const playlistId = match.params.playlistId;
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!playlistId) {
+      return;
     }
-  }
 
-  const [response, setResponse] = React.useState(null);
-  const [error, setError] = React.useState(null);
-
-  React.useEffect(() => {
-    setResponse(null);
-    setError(null);
     async function getResponse() {
       try {
         const response = await axios.post("/api/calculate", {
-          id: idCopy,
+          id: playlistId,
         });
 
-        if (response.data.data !== response) {
-          setResponse(response.data.data);
-        }
+        setResponse(response.data.data);
+        setLoading(false);
       } catch (error) {
         setError(error.response);
+        setLoading(false);
       }
     }
 
     getResponse();
+  }, [playlistId]);
 
-    console.log("mounted...");
-  }, [idCopy]);
+  if (!playlistId) return;
+  if (loading) return <Spinner />;
+  if (error) return <ErrorComp error={error} />;
 
-  let playList = <Spinner />;
-
-  if (response) {
-    playList = <PlayList response={response} />;
-  }
-
-  if (error) {
-    playList = <ErrorComp error={error} id={idCopy} />;
-  }
-
-  return <>{playList}</>;
+  return <PlayList response={response} />;
 }
 
 export default Calculate;
