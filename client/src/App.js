@@ -1,8 +1,7 @@
 import React from "react";
-import Home from "./components/home";
-import Calculate from "./components/calculate";
 import { Route } from "react-router-dom";
-import Footer from "./components/Footer";
+import Calculate from "./pages/calculate";
+import Home from "./pages/home";
 import "./App.css";
 
 function App() {
@@ -12,8 +11,6 @@ function App() {
         <Route path="/" component={Home} />
         <Route path="/calculate/:playlistId" component={Calculate} />
       </div>
-
-      <Footer />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PlayList from "./playlist";
-import Spinner from "./spinner";
-import ErrorComp from "./errorComp";
+import PlayList from "../../components/Playlist";
+import Spinner from "../../components/Spinner";
+import ErrorComp from "../../components/ErrorComp";
 
 function Calculate({ match }) {
   const playlistId = match.params.playlistId;
@@ -14,6 +14,10 @@ function Calculate({ match }) {
     if (!playlistId) {
       return;
     }
+
+    setLoading(true);
+    setResponse(null);
+    setError(null);
 
     async function getResponse() {
       try {

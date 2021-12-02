@@ -1,11 +1,12 @@
 import React from "react";
-import CalculateForm from "./calculateForm/calculateForm";
+import CalculateForm from "../../components/CalculateForm";
 
 function Home({ history }) {
-  const handleCalculateFormsubmit = (inputTerm) => {
+  const handleCalculateFormSubmit = (inputTerm) => {
     const inputParams = inputTerm.split("?");
     const urlParams = new URLSearchParams(inputParams[1]);
-    const id = urlParams.get("list") ? urlParams.get("list") : inputTerm;
+    const list = urlParams.get("list");
+    const id = list || inputTerm;
 
     history.push({
       pathname: `/calculate/${id}`,
@@ -20,9 +21,7 @@ function Home({ history }) {
       </h3>
       <br></br>
       <div className="row">
-        <CalculateForm
-          calculateFormSubmit={handleCalculateFormsubmit}
-        ></CalculateForm>
+        <CalculateForm calculateFormSubmit={handleCalculateFormSubmit} />
       </div>
     </div>
   );
