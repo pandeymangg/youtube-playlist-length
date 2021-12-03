@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import CalculateForm from "../../components/CalculateForm";
 import { FiYoutube } from "react-icons/fi";
+import { useAppContext } from "../../context/app";
 
 function Home({ history }) {
+  const { theme } = useAppContext();
+
   const handleCalculateFormSubmit = (inputTerm) => {
     const inputParams = inputTerm.split("?");
     const urlParams = new URLSearchParams(inputParams[1]);

@@ -1,59 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import styled from "styled-components";
-import { FiYoutube } from "react-icons/fi";
 
 import Calculate from "./pages/calculate";
 import Home from "./pages/home";
+import Navbar from "./components/Navbar";
+import { AppProvider } from "./context/app";
+import { useLocalState } from "./hooks/useLocalState";
 import "./App.css";
 
 function App() {
-  return (
-    <Container>
-      <Navbar>
-        <div className="nav__logo">
-          <div className="nav__logo-container">
-            <FiYoutube size={42} />
-            YouTube Playlist Length
-          </div>
-        </div>
-      </Navbar>
+  const [theme, setTheme] = useLocalState("theme", "light");
 
-      <Route path="/" component={Home} />
-      <Route path="/calculate/:playlistId" component={Calculate} />
-    </Container>
+  return (
+    <AppProvider
+      value={{
+        theme,
+        setTheme,
+      }}
+    >
+      <Container theme={theme}>
+        <Navbar />
+        <Route path="/" component={Home} />
+        <Route path="/calculate/:playlistId" component={Calculate} />
+      </Container>
+    </AppProvider>
   );
 }
 
 const Container = styled.div`
+  color: ${({ theme }) => (theme === "light" ? "#000" : "#fff")};
+  background-color: ${({ theme }) => (theme === "light" ? "#fff" : "#000")};
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
   font-family: Noto Sans JP, sans-serif;
-`;
-
-const Navbar = styled.div`
-  width: 100%;
-  height: 70px;
-  padding: 8px 16px;
-  background-color: olive;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  & .nav__logo {
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    & .nav__logo-container {
-      font-size: 48px;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-    }
-  }
 `;
 
 export default App;
