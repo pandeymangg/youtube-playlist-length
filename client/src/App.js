@@ -33,6 +33,8 @@ const Container = styled.div`
   background-color: ${({ theme }) => (theme === "light" ? "#fff" : "#000")};
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
   font-family: Noto Sans JP, sans-serif;
 `;
 
