@@ -1,5 +1,5 @@
 import React from "react";
-import { FiYoutube } from "react-icons/fi";
+import { FaYoutube } from "react-icons/fa";
 import { MdLightMode, MdNightlightRound } from "react-icons/md";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className="nav__logo">
           <Link to="/">
             <div className="nav__logo-container">
-              <FiYoutube style={{ marginTop: 4 }} size={40} />
+              <FaYoutube style={{ marginTop: 4 }} size={40} color="#ff0000" />
               <span>YouTube Playlist Length</span>
             </div>
           </Link>
@@ -48,7 +48,8 @@ const Container = styled.nav`
   max-width: 900px;
   width: 100%;
   height: 80px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   z-index: 50;
 
   & .nav__container {
@@ -68,7 +69,8 @@ const Container = styled.nav`
       }
 
       & .nav__logo-container {
-        font-size: 24px;
+        font-size: 32px;
+        font-weight: 700;
         line-height: 1;
         display: flex;
         align-items: center;

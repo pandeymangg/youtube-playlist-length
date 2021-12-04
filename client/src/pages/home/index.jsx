@@ -20,7 +20,7 @@ function Home({ history }) {
 
   return (
     <Container>
-      <div>
+      <div className="home__container">
         <div className="">
           <CalculateForm calculateFormSubmit={handleCalculateFormSubmit} />
         </div>
@@ -29,10 +29,21 @@ function Home({ history }) {
   );
 }
 
-const Container = styled.div`
-  max-width: 1100px;
-  margin: auto;
-  height: 100%;
+const Container = styled.section`
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+
+  & .home__container {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export default Home;

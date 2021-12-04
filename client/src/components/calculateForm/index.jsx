@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styles from "./style.module.css";
+import styled from "styled-components";
+import { useAppContext } from "../../context/app";
 
 function CalculateForm({ calculateFormSubmit }) {
   const [inputTerm, setInputTerm] = useState("");
+  const { theme } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,26 +12,95 @@ function CalculateForm({ calculateFormSubmit }) {
   };
 
   return (
-    <form className="col s12" onSubmit={(e) => handleSubmit(e)}>
-      <div className="row">
-        <div className={`input-field col s8 ${styles.inputColor}`}>
+    <Form onSubmit={(e) => handleSubmit(e)} theme={theme}>
+      <div className="form__container">
+        <label class="input">
           <input
+            class="input__field"
             type="text"
-            id="calculate-id"
+            placeholder=" "
+            value={inputTerm}
             onChange={(e) => setInputTerm(e.target.value)}
-          ></input>
-          <label htmlFor="calculate-id">Playlist link or id</label>
-        </div>
+          />
+          <span class="input__label">PlayList Link / Id</span>
+        </label>
+
+        <button
+          type="submit"
+          className="form__submit__btn"
+          disabled={!inputTerm}
+        >
+          <span>Calculate</span>
+        </button>
       </div>
-      <button
-        type="submit"
-        className="btn red waves-effect waves-light"
-        disabled={!inputTerm}
-      >
-        Calculate
-      </button>
-    </form>
+    </Form>
   );
 }
+
+const Form = styled.form`
+  width: 100%;
+
+  & .form__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .input {
+      position: relative;
+
+      &__label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 2px;
+        margin: 16px;
+        white-space: nowrap;
+        transform: translate(0, 0);
+        transform-origin: 0 0;
+        background-color: ${({ theme }) =>
+          theme === "dark" ? "#212121" : "#fff"};
+        transition: transform 120ms ease-in;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      &__field {
+        outline: none;
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        border: 3px solid ${({ theme }) => (theme === "dark" ? "#fff" : "#000")};
+        padding: 16px;
+        color: ${({ theme }) => (theme === "dark" ? "#fff" : "#000")};
+        background: transparent;
+        border-radius: 5px;
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          & + .input__label {
+            transform: translate(0.25rem, -65%) scale(0.8);
+            color: #ff0000;
+            margin: 4px 8px;
+          }
+        }
+      }
+    }
+
+    & .form__submit__btn {
+      width: 7.5rem;
+      height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ff0000;
+      color: #fff;
+      font-weight: 500;
+      font-family: "Inter", sans-serif;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  }
+`;
 
 export default CalculateForm;

@@ -30,12 +30,12 @@ function App() {
 
 const Container = styled.div`
   color: ${({ theme }) => (theme === "light" ? "#000" : "#fff")};
-  background-color: ${({ theme }) => (theme === "light" ? "#fff" : "#000")};
+  background-color: ${({ theme }) => (theme === "light" ? "#fff" : "#212121")};
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  font-family: Noto Sans JP, sans-serif;
+  font-family: "Inter", sans-serif;
 `;
 
 export default App;
