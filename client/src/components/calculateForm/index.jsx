@@ -14,15 +14,15 @@ function CalculateForm({ calculateFormSubmit }) {
   return (
     <Form onSubmit={(e) => handleSubmit(e)} theme={theme}>
       <div className="form__container">
-        <label class="input">
+        <label className="input">
           <input
-            class="input__field"
+            className="input__field"
             type="text"
             placeholder=" "
             value={inputTerm}
             onChange={(e) => setInputTerm(e.target.value)}
           />
-          <span class="input__label">PlayList Link / Id</span>
+          <span className="input__label">PlayList Link / Id</span>
         </label>
 
         <button
@@ -74,6 +74,9 @@ const Form = styled.form`
         color: ${({ theme }) => (theme === "dark" ? "#fff" : "#000")};
         background: transparent;
         border-radius: 5px;
+        font-weight: 500;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
 
         &:focus,
         &:not(:placeholder-shown) {
@@ -99,6 +102,8 @@ const Form = styled.form`
       cursor: pointer;
       border-radius: 5px;
       font-size: 16px;
+      outline: none;
+      border: none;
     }
   }
 `;

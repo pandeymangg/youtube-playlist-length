@@ -1,8 +1,13 @@
 import React from "react";
+import styled from "styled-components";
 import { calculateDuration } from "../utils/calculateDuration";
+import AppText from "./AppText";
+import { useAppContext } from "../context/app";
 
 function PlayList({ response }) {
   const { duration, hours, minutes, seconds, title, numberOfVideos } = response;
+
+  const { theme } = useAppContext();
 
   const [hours1, minutes1, seconds1] = calculateDuration({
     duration,
@@ -22,53 +27,80 @@ function PlayList({ response }) {
   });
 
   return (
-    <div className="col s12 m7 container">
-      <div className="card horizontal">
-        <div style={{ marginLeft: "2%" }} className="card-stacked">
-          <div className="card-content">
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>Title</span>: {title}
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>Number of videos</span>:{" "}
-              {numberOfVideos}
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>Total duration</span>:{" "}
-              {hours > 0 ? `${hours} hours` : ""} {minutes} minutes{" "}
-              {seconds > 0 ? `${seconds} seconds` : ""}
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>At 1.25x</span>:{" "}
-              {hours1 ? `${hours1} hours` : ""} {minutes1} mintues {seconds1}{" "}
-              seconds
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>At 1.50x</span>:{" "}
-              {hours2 ? `${hours2} hours` : ""} {minutes2} minutes {seconds2}{" "}
-              seconds
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>At 1.75x</span>:{" "}
-              {hours3 ? `${hours3} hours` : ""} {minutes3} minutes {seconds3}{" "}
-              seconds
-            </h6>
-
-            <h6 style={{ fontFamily: "Noto Sans JP, sans-serif" }}>
-              <span style={{ fontWeight: "bold" }}>At 2x</span>:{" "}
-              {hours4 ? `${hours4} hours` : ""} {minutes4} minutes {seconds4}{" "}
-              seconds
-            </h6>
+    <Container theme={theme}>
+      <div className="playlist__container">
+        <div className="playlist__details__container">
+          <div>
+            <span style={{ fontWeight: 600 }}>Title</span>:{" "}
+            <span style={{ fontWeight: 500 }}>{title}</span>
           </div>
+
+          <div>
+            <span style={{ fontWeight: 600 }}>Number of videos</span>:{" "}
+            <span style={{ fontWeight: 500 }}>{numberOfVideos}</span>
+          </div>
+
+          <AppText
+            title="Total Duration"
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+          />
+
+          <AppText
+            title="At 1.25x speed"
+            hours={hours1}
+            minutes={minutes1}
+            seconds={seconds1}
+          />
+          <AppText
+            title="At 1.5x speed"
+            hours={hours2}
+            minutes={minutes2}
+            seconds={seconds2}
+          />
+          <AppText
+            title="At 1.75x speed"
+            hours={hours3}
+            minutes={minutes3}
+            seconds={seconds3}
+          />
+          <AppText
+            title="At 2x speed"
+            hours={hours4}
+            minutes={minutes4}
+            seconds={seconds4}
+          />
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.section`
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+
+  & .playlist__container {
+    width: 95%;
+    border-radius: 5px;
+    border: 3px solid ${({ theme }) => (theme === "dark" ? "#fff" : "#333")};
+    box-shadow: 4px 4px 1px
+      ${({ theme }) => (theme === "dark" ? "#fff" : "#333")};
+
+    & .playlist__details__container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+  }
+`;
 
 export default PlayList;
