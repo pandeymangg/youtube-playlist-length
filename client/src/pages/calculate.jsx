@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PlayList from "../../components/Playlist";
-import ErrorComp from "../../components/ErrorComp";
-import LoadingSkeleton from "../../components/LoadingSkeleton";
+import PlayList from "../components/Playlist";
+import ErrorComp from "../components/ErrorComp";
+import LoadingSkeleton from "../components/LoadingSkeleton";
 
 function Calculate({ match }) {
   const playlistId = match.params.playlistId;

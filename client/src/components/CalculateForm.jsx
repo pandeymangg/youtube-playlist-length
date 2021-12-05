@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAppContext } from "../../context/app";
+import { useAppContext } from "../context/app";
 
 function CalculateForm({ calculateFormSubmit }) {
   const [inputTerm, setInputTerm] = useState("");
