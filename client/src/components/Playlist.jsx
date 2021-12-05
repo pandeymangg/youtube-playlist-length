@@ -99,6 +99,10 @@ const Container = styled.section`
       flex-direction: column;
       gap: 0.75rem;
       padding: 1rem;
+
+      @media (max-width: 640px) {
+        padding: 0.5rem;
+      }
     }
   }
 `;

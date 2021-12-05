@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PlayList from "../../components/Playlist";
-import Spinner from "../../components/Spinner";
 import ErrorComp from "../../components/ErrorComp";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 function Calculate({ match }) {
   const playlistId = match.params.playlistId;
@@ -37,8 +37,8 @@ function Calculate({ match }) {
   }, [playlistId]);
 
   if (!playlistId) return;
-  if (loading) return <Spinner />;
-  if (error) return <ErrorComp error={error} />;
+  if (loading) return <LoadingSkeleton />;
+  if (error) return <ErrorComp error={error} id={playlistId} />;
 
   return <PlayList response={response} />;
 }

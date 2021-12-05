@@ -75,6 +75,10 @@ const Container = styled.nav`
         display: flex;
         align-items: center;
         gap: 8px;
+
+        @media (max-width: 640px) {
+          font-size: 24px;
+        }
       }
     }
 

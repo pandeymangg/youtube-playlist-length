@@ -1,41 +1,86 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
+import { useAppContext } from "../context/app";
 
-function ErrorComp(props) {
-    let message = null
+function ErrorComp({ error, id }) {
+  let errorMessage = error.data.message;
+  let message = null;
 
-    if (props.error.data.message === `Cannot read property 'snippet' of undefined`) {
-        message = (
-            <div className="col s12 m7 container">
-                <h2 className="header red-text ">Error!</h2>
-                <div className="card horizontal">
-                    <div className="card-stacked">
-                        <div className="card-content">
-                            <p className="flow-text" >The playlist with id <span className="red-text lighten-2" >{props.id}</span> is not found. Please try again with a different id!</p>
-                        </div>
-                    </div>
+  const { theme } = useAppContext();
+
+  if (
+    errorMessage === `Cannot read properties of undefined (reading 'snippet')`
+  ) {
+    message = (
+      <Container theme={theme}>
+        <div className="error__container">
+          <div className="error__details__container">
+            <h2>Error!</h2>
+            <div>
+              <div>
+                <div>
+                  <p>
+                    The playlist with id{" "}
+                    <span style={{ color: "#ff0000" }}>{id}</span> is not found.
+                    Please try again with a different id!
+                  </p>
                 </div>
+              </div>
             </div>
-        )
-    } else {
-        message = (
-            <div className="col s12 m7 container">
-                <h2 className="header red-text ">Error!</h2>
-                <div className="card horizontal">
-                    <div className="card-stacked">
-                        <div className="card-content">
-                            <p className="flow-text" >{ props.error.data.message }</p>
-                        </div>
-                    </div>
+          </div>
+        </div>
+      </Container>
+    );
+  } else {
+    message = (
+      <Container theme={theme}>
+        <div className="error__container">
+          <div className="error__details__container">
+            <h2>Error!</h2>
+            <div>
+              <div>
+                <div>
+                  <p>Something went wrong! Please try again</p>
                 </div>
+              </div>
             </div>
-        )
-    }
+          </div>
+        </div>
+      </Container>
+    );
+  }
 
-    return (
-        <>
-            { message }
-        </>
-    )
+  return <>{message}</>;
 }
 
-export default ErrorComp
+const Container = styled.section`
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+
+  & .error__container {
+    width: 95%;
+    border-radius: 5px;
+    border: 3px solid ${({ theme }) => (theme === "dark" ? "#fff" : "#333")};
+    box-shadow: 4px 4px 1px
+      ${({ theme }) => (theme === "dark" ? "#fff" : "#333")};
+
+    & .error__details__container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+
+      @media (max-width: 640px) {
+        padding: 0.5rem;
+      }
+    }
+  }
+`;
+
+export default ErrorComp;
