@@ -9,9 +9,13 @@ import { AppProvider } from "./context/app";
 import { useLocalState } from "./hooks/useLocalState";
 import "./App.css";
 import Footer from "./components/Footer";
+import { useThemeDetector } from "./hooks/useThemeDetector";
 
 function App() {
-  const [theme, setTheme] = useLocalState("theme", "light");
+  const isDarkTheme = useThemeDetector();
+  const defaultTheme = isDarkTheme ? "dark" : "light";
+
+  const [theme, setTheme] = useLocalState("theme", defaultTheme);
 
   return (
     <AppProvider
