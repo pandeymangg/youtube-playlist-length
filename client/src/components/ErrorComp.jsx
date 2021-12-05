@@ -2,55 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import { useAppContext } from "../context/app";
 
-function ErrorComp({ error, id }) {
-  let errorMessage = error.data.message;
-  let message = null;
-
+function ErrorComp() {
   const { theme } = useAppContext();
 
-  if (
-    errorMessage === `Cannot read properties of undefined (reading 'snippet')`
-  ) {
-    message = (
-      <Container theme={theme}>
-        <div className="error__container">
-          <div className="error__details__container">
-            <h2>Error!</h2>
+  return (
+    <Container theme={theme}>
+      <div className="error__container">
+        <div className="error__details__container">
+          <h2>Error!</h2>
+          <div>
             <div>
               <div>
-                <div>
-                  <p>
-                    The playlist with id{" "}
-                    <span style={{ color: "#ff0000" }}>{id}</span> is not found.
-                    Please try again with a different id!
-                  </p>
-                </div>
+                <p>
+                  Either the playlist with this id does not exists or something
+                  else went wrong! Please try again.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </Container>
-    );
-  } else {
-    message = (
-      <Container theme={theme}>
-        <div className="error__container">
-          <div className="error__details__container">
-            <h2>Error!</h2>
-            <div>
-              <div>
-                <div>
-                  <p>Something went wrong! Please try again</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container>
-    );
-  }
-
-  return <>{message}</>;
+      </div>
+    </Container>
+  );
 }
 
 const Container = styled.section`
