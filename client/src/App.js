@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { AppProvider } from "./context/app";
 import { useLocalState } from "./hooks/useLocalState";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   const [theme, setTheme] = useLocalState("theme", "light");
@@ -23,6 +24,7 @@ function App() {
         <Navbar />
         <Route path="/" component={Home} />
         <Route path="/calculate/:playlistId" component={Calculate} />
+        <Footer />
       </Container>
     </AppProvider>
   );
