@@ -69,7 +69,7 @@ const Container = styled.nav`
       }
 
       & .nav__logo-container {
-        font-size: 32px;
+        font-size: 2rem;
         font-weight: 700;
         line-height: 1;
         display: flex;
@@ -77,7 +77,7 @@ const Container = styled.nav`
         gap: 8px;
 
         @media (max-width: 640px) {
-          font-size: 24px;
+          font-size: 1.2rem;
         }
       }
     }
