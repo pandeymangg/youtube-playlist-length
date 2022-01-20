@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { calculateDuration } from "../utils/calculateDuration";
 import AppText from "./AppText";
 import { useAppContext } from "../context/app";
+import { IState } from "../pages/calculate";
 
-function PlayList({ response }) {
+const PlayList: React.FC<IState> = ({ response }) => {
   const { duration, hours, minutes, seconds, title, numberOfVideos } = response;
 
   const { theme } = useAppContext();
@@ -75,7 +76,7 @@ function PlayList({ response }) {
       </div>
     </Container>
   );
-}
+};
 
 const Container = styled.section`
   max-width: 900px;

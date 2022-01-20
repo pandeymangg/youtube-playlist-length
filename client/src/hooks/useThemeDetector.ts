@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-export const useThemeDetector = () => {
+export const useThemeDetector = (): boolean => {
   const getCurrentTheme = () =>
     window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme());
-  const mqListener = (e) => {
+  const mqListener = (e: MediaQueryListEvent) => {
     setIsDarkTheme(e.matches);
   };
 

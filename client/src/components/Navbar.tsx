@@ -24,7 +24,9 @@ const Navbar = () => {
         <div className="nav__icons">
           <span
             onClick={() =>
-              setTheme((theme) => (theme === "light" ? "dark" : "light"))
+              setTheme((theme?: string) =>
+                theme === "light" ? "dark" : "light"
+              )
             }
           >
             {theme === "light" ? (

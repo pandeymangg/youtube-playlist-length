@@ -1,4 +1,10 @@
-export const calculateDuration = ({ duration, speed }) => {
+export const calculateDuration = ({
+  duration,
+  speed,
+}: {
+  duration: number;
+  speed: number;
+}) => {
   const totalSeconds = duration / speed;
 
   let minutes = Math.floor(totalSeconds / 60);

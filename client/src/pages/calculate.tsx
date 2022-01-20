@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import PlayList from "../components/Playlist";
 import ErrorComp from "../components/ErrorComp";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { useParams } from "react-router-dom";
 
-function Calculate() {
+export interface IState {
+  response: {
+    duration: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+    title: string;
+    numberOfVideos: number;
+  };
+}
+
+const Calculate: React.FC = () => {
   const params = useParams();
 
   const playlistId = params.playlistId;
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
+  const [response, setResponse] = useState<IState["response"] | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,7 +42,9 @@ function Calculate() {
         setResponse(response.data.data);
         setLoading(false);
       } catch (error) {
-        setError(error.response);
+        if (axios.isAxiosError(error)) {
+          setError("error");
+        }
         setLoading(false);
       }
     }
@@ -39,11 +52,11 @@ function Calculate() {
     getResponse();
   }, [playlistId]);
 
-  if (!playlistId) return;
+  if (!playlistId || !response) return null;
   if (loading) return <LoadingSkeleton />;
-  if (error) return <ErrorComp error={error} id={playlistId} />;
+  if (error) return <ErrorComp />;
 
   return <PlayList response={response} />;
-}
+};
 
 export default Calculate;

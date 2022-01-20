@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const navigate = useNavigate();
 
-  const handleCalculateFormSubmit = (inputTerm) => {
+  const handleCalculateFormSubmit = (inputTerm: string) => {
     const inputParams = inputTerm.split("?");
     const urlParams = new URLSearchParams(inputParams[1]);
     const list = urlParams.get("list");
