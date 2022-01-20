@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import PlayList from "../components/Playlist";
 import ErrorComp from "../components/ErrorComp";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { useParams } from "react-router-dom";
-
 export interface IState {
   response: {
     duration: number;
@@ -52,9 +51,11 @@ const Calculate: React.FC = () => {
     getResponse();
   }, [playlistId]);
 
-  if (!playlistId || !response) return null;
+  if (!playlistId) return null;
   if (loading) return <LoadingSkeleton />;
   if (error) return <ErrorComp />;
+
+  if (!response) return null;
 
   return <PlayList response={response} />;
 };
