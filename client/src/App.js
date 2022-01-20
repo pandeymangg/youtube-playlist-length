@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import Calculate from "./pages/calculate";
@@ -26,8 +26,21 @@ function App() {
     >
       <Container theme={theme}>
         <Navbar />
-        <Route path="/" component={Home} />
-        <Route path="/calculate/:playlistId" component={Calculate} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/calculate">
+            <Route index element={<Home />} />
+            <Route
+              path=":playlistId"
+              element={
+                <>
+                  <Home />
+                  <Calculate />
+                </>
+              }
+            />
+          </Route>
+        </Routes>
         <Footer />
       </Container>
     </AppProvider>

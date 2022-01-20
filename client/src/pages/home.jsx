@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import CalculateForm from "../components/CalculateForm";
+import { useNavigate } from "react-router-dom";
 
-function Home({ history }) {
+function Home() {
+  const navigate = useNavigate();
+
   const handleCalculateFormSubmit = (inputTerm) => {
     const inputParams = inputTerm.split("?");
     const urlParams = new URLSearchParams(inputParams[1]);
     const list = urlParams.get("list");
     const id = list || inputTerm;
 
-    history.push({
-      pathname: `/calculate/${id}`,
-    });
+    navigate(`/calculate/${id}`);
   };
 
   return (

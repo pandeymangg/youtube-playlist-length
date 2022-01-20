@@ -3,9 +3,12 @@ import axios from "axios";
 import PlayList from "../components/Playlist";
 import ErrorComp from "../components/ErrorComp";
 import LoadingSkeleton from "../components/LoadingSkeleton";
+import { useParams } from "react-router-dom";
 
-function Calculate({ match }) {
-  const playlistId = match.params.playlistId;
+function Calculate() {
+  const params = useParams();
+
+  const playlistId = params.playlistId;
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

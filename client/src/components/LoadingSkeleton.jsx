@@ -2,12 +2,19 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styled from "styled-components";
+import { useAppContext } from "../context/app";
 
 function LoadingSkeleton() {
+  const { theme } = useAppContext();
+
   return (
     <Container>
       <div className="skeleton__container">
-        <Skeleton height={200} />
+        <Skeleton
+          height={200}
+          baseColor={theme === "light" && "#ebebeb"}
+          highlightColor={theme === "light" && "#f5f5f5"}
+        />
       </div>
     </Container>
   );
