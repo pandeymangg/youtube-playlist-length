@@ -1,5 +1,4 @@
-import React from "react";
-import { FaYoutube } from "react-icons/fa";
+import { AiOutlineYoutube } from "react-icons/ai";
 import { MdLightMode, MdNightlightRound } from "react-icons/md";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -15,7 +14,12 @@ const Navbar = () => {
         <div className="nav__logo">
           <Link to="/">
             <div className="nav__logo-container">
-              <FaYoutube style={{ marginTop: 4 }} size={40} color="#ff0000" />
+              <AiOutlineYoutube
+                style={{ marginTop: 4 }}
+                size={40}
+                color="#ff0000"
+              />
+
               <span>YouTube Playlist Length</span>
             </div>
           </Link>

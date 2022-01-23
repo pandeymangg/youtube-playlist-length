@@ -9,6 +9,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useThemeDetector } from "./hooks/useThemeDetector";
 import Footer from "./components/Footer";
 import "./App.css";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const isDarkTheme = useThemeDetector();
@@ -27,18 +28,17 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/calculate">
-            <Route index element={<Home />} />
-            <Route
-              path=":playlistId"
-              element={
-                <>
-                  <Home />
-                  <Calculate />
-                </>
-              }
-            />
-          </Route>
+          <Route
+            path="/calculate/:playlistId"
+            element={
+              <>
+                <Home />
+                <Calculate />
+              </>
+            }
+          />
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
       </Container>
