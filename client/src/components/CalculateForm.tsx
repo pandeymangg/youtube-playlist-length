@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppContext } from "../context/app";
 
-function CalculateForm({ calculateFormSubmit }) {
+interface IProps {
+  calculateFormSubmit: { (arg: string): void };
+}
+
+const CalculateForm: React.FC<IProps> = ({ calculateFormSubmit }) => {
   const [inputTerm, setInputTerm] = useState("");
+
   const { theme } = useAppContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     calculateFormSubmit(inputTerm);
   };
 
   return (
-    <Form onSubmit={(e) => handleSubmit(e)} theme={theme}>
+    <Form onSubmit={handleSubmit} theme={theme}>
       <div className="form__container">
         <label className="input">
           <input
@@ -35,7 +40,7 @@ function CalculateForm({ calculateFormSubmit }) {
       </div>
     </Form>
   );
-}
+};
 
 const Form = styled.form`
   width: 100%;

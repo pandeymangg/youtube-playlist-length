@@ -1,10 +1,9 @@
-import React from "react";
-import { FaYoutube } from "react-icons/fa";
 import { MdLightMode, MdNightlightRound } from "react-icons/md";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { useAppContext } from "../context/app";
+import Logo from "../data/icons/youtube-icon.svg";
 
 const Navbar = () => {
   const { theme, setTheme } = useAppContext();
@@ -15,7 +14,7 @@ const Navbar = () => {
         <div className="nav__logo">
           <Link to="/">
             <div className="nav__logo-container">
-              <FaYoutube style={{ marginTop: 4 }} size={40} color="#ff0000" />
+              <img alt="YouTube Logo" src={Logo} />
               <span>YouTube Playlist Length</span>
             </div>
           </Link>
@@ -24,7 +23,9 @@ const Navbar = () => {
         <div className="nav__icons">
           <span
             onClick={() =>
-              setTheme((theme) => (theme === "light" ? "dark" : "light"))
+              setTheme((theme?: string) =>
+                theme === "light" ? "dark" : "light"
+              )
             }
           >
             {theme === "light" ? (
@@ -75,6 +76,11 @@ const Container = styled.nav`
         display: flex;
         align-items: center;
         gap: 8px;
+
+        & img {
+          width: 40px;
+          height: 40px;
+        }
 
         @media (max-width: 640px) {
           font-size: 1.2rem;

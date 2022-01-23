@@ -1,6 +1,13 @@
 import React from "react";
 
-const AppText = ({ title, hours, minutes, seconds }) => (
+interface IProps {
+  title: string;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const AppText: React.FC<IProps> = ({ title, hours, minutes, seconds }) => (
   <div>
     <span>
       <span style={{ fontWeight: 600 }}>{title}:</span>{" "}
